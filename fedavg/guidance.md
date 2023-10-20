@@ -1,6 +1,6 @@
 # Communication-Efficient Learning of Deep Networks from Decentralized Data导读
 
----
+[TOC]
 
 ## abstract
 
@@ -114,5 +114,10 @@ def WeightSum(w[T],n[K]):
     return ws
 ```
 
+## Question
 
+### parameter consistency
 
+now all the parameter seems to be consistent, but when facing Non-IID data, the model may not fit well when the data is drifting, so can different client fitting schemes be specified for different data drifting?
+
+往往真实情况都是数据异构性的，参数一致性是否有改进的空间？
