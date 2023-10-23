@@ -1,5 +1,7 @@
 # Federated Optimization in Heterogeneous Networks导读
 
+## Source
+
 论文来源: 《[Federated Optimization in Heterogeneous Networks](https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1812.06127)》
 
 这篇文章基于FedAvg的基础上，针对Non-IID数据做出了一些轻微的调整。
@@ -15,3 +17,20 @@ question:
 When would exist drop these clients?
 
 Why epochs is too much will drop clients?
+
+
+
+## Proximal term
+
+根据FedAvg的经验，优化目标是最小化经验损失Epirical risk:
+$$
+min_wf(w) = \sum_{k=1}^{N} p_kF_k(w) = \mathbb{E}[F_k(w)]
+$$
+其中
+$$
+p_k \geqslant 0 , \sum_{k=1}^{K}{p_k} = 1,p_k = \frac{n_k}{n}
+$$
+作者引入了额外的一个叫做proximal term的东西。
+$$
+\underset {\omega}{min}h(w;w^t)_k = F_k(w) + \frac{\mu}{2}\mid\mid w - w^t \mid\mid ^ 2
+$$
