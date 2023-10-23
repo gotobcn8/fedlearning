@@ -17,26 +17,16 @@
 
 
 ## Proximal term
-
 根据FedAvg的经验，优化目标是最小化经验损失Epirical risk:
-$$
-{min_w f(w)} = \sum_{k=1}^{N} {p_k}{F_k(w)} = \mathbb{E}[F_k(w)]
-$$
+$${min_w f(w)} = \sum_{k=1}^{N} {p_k}{F_k(w)} = \mathbb{E}[F_k(w)]$$
+>>>>>>> Stashed changes
 其中
-$$
-p_k \geqslant 0 , \sum_{k=1}^{K}{p_k} = 1,p_k = \frac{n_k}{n}
-$$
+$$p_k \geqslant 0 , \sum_{k=1}^{K}{p_k} = 1,p_k = \frac{n_k}{n}$$
 作者引入了额外的一个叫做proximal term的东西。
-$$
-\underset {\omega}{min}h(w;w^t)_k = F_k(w) + \frac{\mu}{2}\mid\mid w - w^t \mid\mid ^ 2
-$$
-
+$$\underset {\omega}{min}h(w;w^t)_k = F_k(w) + \frac{\mu}{2}\mid\mid w - w^t \mid\mid ^ 2$$
 ## code
-
 本地更新伪代码
-
 ### Proximal term
-
 ```python
 def train():
     for epoch in range(Epochs):
@@ -59,37 +49,19 @@ def train():
 for w, w_t in zip(model.parameters(), global_model.parameters()):
     proximal_term += (w - w_t).norm(2)
 ```
-
-### gamma-inexact solution
-
+### $`\gamma`$-inexact solution
 For a function 
-$$
-h(w;w_0) = F(w) + \frac{mu}{2}\mid\mid w - w_0 \mid\mid ^ 2
-$$
-and
-$$
-\gamma \in [0,1]
-$$
-we say w* is a y-inexact solution of h(w;w0)
-
-conclusion:
-
-总之只要找到一个w*  使h(w;w0)最小，且满足
-$$
-\mid\mid \nabla h(w^*;w_0) \mid \mid \leqslant \gamma \mid\mid \nabla h(w_0;w_0) \mid\mid
-$$
+$$h(w;w_0) = F(w) + \frac{mu}{2}\mid\mid w - w_0 \mid\mid ^ 2 \\ \gamma \in [0,1]$$
+we say w* is a y-inexact solution of $`h(w;w_0)`$
+### Conclusion:
+总之只要找到一个w*  使$`h(w;w_0)`$最小，且满足
+$$\Vert \nabla h(w^\ast;w_0) \Vert \leqslant \gamma \Vert \nabla h(w_0;w_0) \Vert$$
 这里w*是h的一个gamma不精确的解。
-
-
-
 ## Q&A
-
 - **When would  drop these clients?**
 - **Why many epochs will lead to drop clients?**
 - **it seems that selected gamma is smaller and the solution of loss function will be more precise? isn't it?**
 
-​		gamma selected is about converage problem, Involving complex mathematical proofs
+gamma selected is about converage problem, Involving complex mathematical proofs
 
 - **how to select a good gamma to fit model? author didn't show in this paper, hearing that he will supply it.**
-
-​		

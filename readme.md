@@ -12,15 +12,15 @@ it tells the development of federated learning tendency. nothing useful
 
 >  phones and tablets are the primary computing devices for many people 
 >
->  Federated Learning Ideal problems for federated learning have the following properties: 1) Training on real-world data from mobile devices provides a distinct advantage over training on proxy data that is generally available in the data center. 2) This data is privacy sensitive or large in size (compared to the size of the model), so it is preferable not to log it to the data center purely for the purpose of model training (in service of the focused collection principle). 3) For supervised tasks, labels on the data can be inferred naturally from user interaction.
+> Federated Learning Ideal problems for federated learning have the following properties: 1) Training on real-world data from mobile devices provides a distinct advantage over training on proxy data that is generally available in the data center. 2) This data is privacy sensitive or large in size (compared to the size of the model), so it is preferable not to log it to the data center purely for the purpose of model training (in service of the focused collection principle). 3) For supervised tasks, labels on the data can be inferred naturally from user interaction.
 >
->  Federated Optimization We refer to the optimization problem implicit in federated learning as federated optimization, drawing a connection (and contrast) to distributed optimization. Federated optimization has several key properties that differentiate it from a typical distributed optimization problem: 
+> Federated Optimization We refer to the optimization problem implicit in federated learning as federated optimization, drawing a connection (and contrast) to distributed optimization. Federated optimization has several key properties that differentiate it from a typical distributed optimization problem: 
 >
->  **• Non-IID** The training data on a given client is typically based on the usage of the mobile device by a particular user, and hence any particular user’s local dataset will not be representative of the population distribution. 
+> **• Non-IID** The training data on a given client is typically based on the usage of the mobile device by a particular user, and hence any particular user’s local dataset will not be representative of the population distribution. 
 >
->  **• Unbalanced** Similarly, some users will make much heavier use of the service or app than others, leading to varying amounts of local training data.
+> **• Unbalanced** Similarly, some users will make much heavier use of the service or app than others, leading to varying amounts of local training data.
 >
->  **• Massively distributed** We expect the number of clients participating in an optimization to be much larger than the average number of examples per client.
+> **• Massively distributed** We expect the number of clients participating in an optimization to be much larger than the average number of examples per client.
 >
 >  **• Limited communication** Mobile devices are frequently offline or on slow or expensive connections.
 
@@ -45,25 +45,16 @@ divided to three cases:
 
 > These issues are beyond the scope of the current work; instead, we use a controlled environment that is suitable for experiments, but still addresses the key issues of client availability and unbalanced and non-IID data. We assume a synchronous update scheme that proceeds in rounds of communication. There is a fixed **set of K clients**, each with a fixed local dataset. At the beginning of each round, a random **fraction** **C of clients is selected**, and the server sends the current global algorithm state to each of these clients (e.g., the current model parameters). We only select a fraction of clients for efficiency, as our experiments show diminishing returns for adding more clients beyond a certain point. Each selected client then performs local computation based on the global state and its local dataset, and sends an update to the server. The server then applies these updates to its global state, and the process repeats. H. Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, Blaise Aguera y Arcas ¨ While we focus on non-convex neural network objectives, the algorithm we consider is applicable to any finite-sum objective of the form
 
-$$
-\underset {\omega \in \mathbb{R}^d}{minf(w)}
-$$
-
- where 
-$$
-f(w) \overset{def}{=} \frac{1}{n}\sum_{i=1}^n f_i(w)
-$$
+$$\underset {\omega \in \mathbb{R}^d}{minf(w)} \quad where \quad {f(w)}\overset{def}{=} \frac{1}{n}\sum_{i=1}^{n} {f_i(w)}$$
 
 
-f(w) 是loss  function，fi(w)是第i个客户端的loss，
+f(w) 是loss function，$`f_i(w)`$是第i个客户端的loss，
 
 > For a machine learning problem, we typically take fi(w) = `(xi , yi ; w), that is, the loss of the prediction on example (xi , yi) made with model parameters w. We assume there are K clients over which the data is partitioned, with Pk the set of indexes of data points on client k, with nk = |Pk|. Thus, we can re-write the objective (1) as
 
-K个客户端的数据被区分开，Pk表示第k个客户端的索引集合，nk = L1范数（pk）
+K个客户端的数据被区分开，Pk表示第k个客户端的索引集合， $`n_k = \Vert p_k \Vert`$
 
-$$
-f(w)=\sum_{k=1}^K \frac{n_k}{n} F_k(w) where F_k(w) = \frac{1}{n_k}\sum_{i \in \mathcal{p_k}}f_i(w)
-$$
+$${f(w)} = \sum_{k=1}^{K} \frac{n_k}{n} {F_k(w)} \quad where \quad {F_k(w)} = \frac{1}{n_k}\sum_{i \in \mathcal{p_k}}{f_i(w)}$$
 
 
 全局的loss等于每个客户端loss的加权loss
@@ -84,7 +75,7 @@ $$
 
 FedAvg，选择C个客户端，E为训练的轮次，B为训练的批次（无穷代表全批次），同理
 
-FedAvg(C=1, E = 1, B = infinite) = FedSGD
+FedAvg(C=1, E = 1, B = $`\infty`$) = FedSGD
 
 |      | FedAvg        | FedSGD  |
 | ---- | ------------- | ------- |

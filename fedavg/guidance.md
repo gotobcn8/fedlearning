@@ -45,25 +45,16 @@ divided to three cases:
 
 > These issues are beyond the scope of the current work; instead, we use a controlled environment that is suitable for experiments, but still addresses the key issues of client availability and unbalanced and non-IID data. We assume a synchronous update scheme that proceeds in rounds of communication. There is a fixed **set of K clients**, each with a fixed local dataset. At the beginning of each round, a random **fraction** **C of clients is selected**, and the server sends the current global algorithm state to each of these clients (e.g., the current model parameters). We only select a fraction of clients for efficiency, as our experiments show diminishing returns for adding more clients beyond a certain point. Each selected client then performs local computation based on the global state and its local dataset, and sends an update to the server. The server then applies these updates to its global state, and the process repeats. H. Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, Blaise Aguera y Arcas ¨ While we focus on non-convex neural network objectives, the algorithm we consider is applicable to any finite-sum objective of the form
 
-$$
-\underset {\omega \in \mathbb{R}^d}{minf(w)}
-$$
-
- where 
-$$
-{f(w)}\overset{def}{=} \frac{1}{n}\sum_{i=1}^{n} {f_i(w)}
-$$
+$$\underset {\omega \in \mathbb{R}^d}{minf(w)} \quad where \quad {f(w)}\overset{def}{=} \frac{1}{n}\sum_{i=1}^{n} {f_i(w)}$$
 
 
-f(w) 是loss  function，fi(w)是第i个客户端的loss，
+f(w) 是loss function，$`f_i(w)`$是第i个客户端的loss，
 
 > For a machine learning problem, we typically take fi(w) = `(xi , yi ; w), that is, the loss of the prediction on example (xi , yi) made with model parameters w. We assume there are K clients over which the data is partitioned, with Pk the set of indexes of data points on client k, with nk = |Pk|. Thus, we can re-write the objective (1) as
 
-K个客户端的数据被区分开，Pk表示第k个客户端的索引集合，nk = L1范数（pk）
+K个客户端的数据被区分开，Pk表示第k个客户端的索引集合， $`n_k = \Vert p_k \Vert`$
 
-$$
-{f(w)} = \sum_{k=1}^{K} \frac{n_k}{n} {F_k(w)} where {F_k(w)} = \frac{1}{n_k}\sum_{i \in \mathcal{p_k}}{f_i(w)}
-$$
+$${f(w)} = \sum_{k=1}^{K} \frac{n_k}{n} {F_k(w)} \quad where \quad {F_k(w)} = \frac{1}{n_k}\sum_{i \in \mathcal{p_k}}{f_i(w)}$$
 
 
 全局的loss等于每个客户端loss的加权loss
@@ -84,7 +75,7 @@ $$
 
 FedAvg，选择C个客户端，E为训练的轮次，B为训练的批次（无穷代表全批次），同理
 
-FedAvg(C=1, E = 1, B = infinite) = FedSGD
+FedAvg(C=1, E = 1, B = $`\infty`$) = FedSGD
 
 |      | FedAvg        | FedSGD  |
 | ---- | ------------- | ------- |
@@ -99,7 +90,7 @@ FedAvg(C=1, E = 1, B = infinite) = FedSGD
 Algorithm 1 FederatedAveraging. TheK clients are
 indexed by k; B is the local minibatch size, E is the number
 of local epochs, and learning_rate is the learning rate.
-
+### Fake code
 ```python
 def server():    
     initialize w[T][K],wfinal[T]
@@ -124,13 +115,13 @@ def WeightSum(w[T],n[K]):
         ws += (n[k] / n_total) * w[k]
     return ws
 ```
+### realize
 
 ## Question
 
 ### parameter consistency
 
 - now all the parameter seems to be consistent, but when facing Non-IID data, the model may not fit well when the data is drifting, so can different client fitting schemes be specified for different data drifting?
-
 
 ​		往往真实情况都是数据异构性的，参数一致性是否有改进的空间？
 
