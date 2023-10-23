@@ -51,7 +51,7 @@ $$
 
  where 
 $$
-f(w) \overset{def}{=} \frac{1}{n}\sum_{i=1}^n f_i(w)
+{f(w)}\overset{def}{=} \frac{1}{n}\sum_{i=1}^{n} {f_i(w)}
 $$
 
 
@@ -62,7 +62,7 @@ f(w) 是loss  function，fi(w)是第i个客户端的loss，
 K个客户端的数据被区分开，Pk表示第k个客户端的索引集合，nk = L1范数（pk）
 
 $$
-f(w) = \sum_{k=1}^K \frac{n_k}{n} F_k(w) where F_k(w) = \frac{1}{n_k}\sum_{i \in \mathcal{p_k}}f_i(w)
+{f(w)} = \sum_{k=1}^{K} \frac{n_k}{n} {F_k(w)} where {F_k(w)} = \frac{1}{n_k}\sum_{i \in \mathcal{p_k}}{f_i(w)}
 $$
 
 
