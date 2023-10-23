@@ -45,7 +45,15 @@ divided to three cases:
 
 > These issues are beyond the scope of the current work; instead, we use a controlled environment that is suitable for experiments, but still addresses the key issues of client availability and unbalanced and non-IID data. We assume a synchronous update scheme that proceeds in rounds of communication. There is a fixed **set of K clients**, each with a fixed local dataset. At the beginning of each round, a random **fraction** **C of clients is selected**, and the server sends the current global algorithm state to each of these clients (e.g., the current model parameters). We only select a fraction of clients for efficiency, as our experiments show diminishing returns for adding more clients beyond a certain point. Each selected client then performs local computation based on the global state and its local dataset, and sends an update to the server. The server then applies these updates to its global state, and the process repeats. H. Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, Blaise Aguera y Arcas ¨ While we focus on non-convex neural network objectives, the algorithm we consider is applicable to any finite-sum objective of the form
 
-![img](file:///C:/Users/gotobcn/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png)
+$$
+\underset {\omega \in \mathbb{R}^d}{minf(w)}
+$$
+
+ where 
+$$
+f(w) \overset{def}{=} \frac{1}{n}\sum_{i=1}^n f_i(w)
+$$
+
 
 f(w) 是loss  function，fi(w)是第i个客户端的loss，
 
@@ -53,7 +61,10 @@ f(w) 是loss  function，fi(w)是第i个客户端的loss，
 
 K个客户端的数据被区分开，Pk表示第k个客户端的索引集合，nk = L1范数（pk）
 
-![img](file:///C:/Users/gotobcn/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png)
+$$
+f(w) = \sum_{k=1}^K \frac{n_k}{n} F_k(w) where F_k(w) = \frac{1}{n_k}\sum_{i \in \mathcal{p_k}}f_i(w)
+$$
+
 
 全局的loss等于每个客户端loss的加权loss
 
@@ -118,6 +129,8 @@ def WeightSum(w[T],n[K]):
 
 ### parameter consistency
 
-now all the parameter seems to be consistent, but when facing Non-IID data, the model may not fit well when the data is drifting, so can different client fitting schemes be specified for different data drifting?
+- now all the parameter seems to be consistent, but when facing Non-IID data, the model may not fit well when the data is drifting, so can different client fitting schemes be specified for different data drifting?
 
-往往真实情况都是数据异构性的，参数一致性是否有改进的空间？
+
+​		往往真实情况都是数据异构性的，参数一致性是否有改进的空间？
+

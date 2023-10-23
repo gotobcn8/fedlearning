@@ -1,6 +1,6 @@
 # Communication-Efficient Learning of Deep Networks from Decentralized Data导读
 
----
+[TOC]
 
 ## abstract
 
@@ -12,15 +12,15 @@ it tells the development of federated learning tendency. nothing useful
 
 >  phones and tablets are the primary computing devices for many people 
 >
-> Federated Learning Ideal problems for federated learning have the following properties: 1) Training on real-world data from mobile devices provides a distinct advantage over training on proxy data that is generally available in the data center. 2) This data is privacy sensitive or large in size (compared to the size of the model), so it is preferable not to log it to the data center purely for the purpose of model training (in service of the focused collection principle). 3) For supervised tasks, labels on the data can be inferred naturally from user interaction.
+>  Federated Learning Ideal problems for federated learning have the following properties: 1) Training on real-world data from mobile devices provides a distinct advantage over training on proxy data that is generally available in the data center. 2) This data is privacy sensitive or large in size (compared to the size of the model), so it is preferable not to log it to the data center purely for the purpose of model training (in service of the focused collection principle). 3) For supervised tasks, labels on the data can be inferred naturally from user interaction.
 >
-> Federated Optimization We refer to the optimization problem implicit in federated learning as federated optimization, drawing a connection (and contrast) to distributed optimization. Federated optimization has several key properties that differentiate it from a typical distributed optimization problem: 
+>  Federated Optimization We refer to the optimization problem implicit in federated learning as federated optimization, drawing a connection (and contrast) to distributed optimization. Federated optimization has several key properties that differentiate it from a typical distributed optimization problem: 
 >
-> **• Non-IID** The training data on a given client is typically based on the usage of the mobile device by a particular user, and hence any particular user’s local dataset will not be representative of the population distribution. 
+>  **• Non-IID** The training data on a given client is typically based on the usage of the mobile device by a particular user, and hence any particular user’s local dataset will not be representative of the population distribution. 
 >
-> **• Unbalanced** Similarly, some users will make much heavier use of the service or app than others, leading to varying amounts of local training data.
+>  **• Unbalanced** Similarly, some users will make much heavier use of the service or app than others, leading to varying amounts of local training data.
 >
-> **• Massively distributed** We expect the number of clients participating in an optimization to be much larger than the average number of examples per client.
+>  **• Massively distributed** We expect the number of clients participating in an optimization to be much larger than the average number of examples per client.
 >
 >  **• Limited communication** Mobile devices are frequently offline or on slow or expensive connections.
 
@@ -45,7 +45,15 @@ divided to three cases:
 
 > These issues are beyond the scope of the current work; instead, we use a controlled environment that is suitable for experiments, but still addresses the key issues of client availability and unbalanced and non-IID data. We assume a synchronous update scheme that proceeds in rounds of communication. There is a fixed **set of K clients**, each with a fixed local dataset. At the beginning of each round, a random **fraction** **C of clients is selected**, and the server sends the current global algorithm state to each of these clients (e.g., the current model parameters). We only select a fraction of clients for efficiency, as our experiments show diminishing returns for adding more clients beyond a certain point. Each selected client then performs local computation based on the global state and its local dataset, and sends an update to the server. The server then applies these updates to its global state, and the process repeats. H. Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, Blaise Aguera y Arcas ¨ While we focus on non-convex neural network objectives, the algorithm we consider is applicable to any finite-sum objective of the form
 
-![img](file:///C:/Users/gotobcn/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png)
+$$
+\underset {\omega \in \mathbb{R}^d}{minf(w)}
+$$
+
+ where 
+$$
+f(w) \overset{def}{=} \frac{1}{n}\sum_{i=1}^n f_i(w)
+$$
+
 
 f(w) 是loss  function，fi(w)是第i个客户端的loss，
 
@@ -53,7 +61,10 @@ f(w) 是loss  function，fi(w)是第i个客户端的loss，
 
 K个客户端的数据被区分开，Pk表示第k个客户端的索引集合，nk = L1范数（pk）
 
-![img](file:///C:/Users/gotobcn/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png)
+$$
+f(w) = \sum_{k=1}^K \frac{n_k}{n} F_k(w) where F_k(w) = \frac{1}{n_k}\sum_{i \in \mathcal{p_k}}f_i(w)
+$$
+
 
 全局的loss等于每个客户端loss的加权loss
 
@@ -114,5 +125,12 @@ def WeightSum(w[T],n[K]):
     return ws
 ```
 
+## Question
 
+### parameter consistency
+
+- now all the parameter seems to be consistent, but when facing Non-IID data, the model may not fit well when the data is drifting, so can different client fitting schemes be specified for different data drifting?
+
+
+​		往往真实情况都是数据异构性的，参数一致性是否有改进的空间？
 
