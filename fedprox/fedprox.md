@@ -20,7 +20,7 @@
 
 根据FedAvg的经验，优化目标是最小化经验损失Epirical risk:
 $$
-min_wf(w) = \sum_{k=1}^{N} p_kF_k(w) = \mathbb{E}[F_k(w)]
+{min_w f(w)} = \sum_{k=1}^{N} {p_k}{F_k(w)} = \mathbb{E}[F_k(w)]
 $$
 其中
 $$
