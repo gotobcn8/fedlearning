@@ -57,11 +57,13 @@ we say w* is a y-inexact solution of $`h(w;w_0)`$
 总之只要找到一个w*  使$`h(w;w_0)`$最小，且满足
 $$\Vert \nabla h(w^\ast;w_0) \Vert \leqslant \gamma \Vert \nabla h(w_0;w_0) \Vert$$
 这里w*是h的一个gamma不精确的解。
+
 ## Q&A
 - **When would  drop these clients?**
 - **Why many epochs will lead to drop clients?**
 - **it seems that selected gamma is smaller and the solution of loss function will be more precise? isn't it?**
 
-gamma selected is about converage problem, Involving complex mathematical proofs
-
+  gamma selected is about converage problem, Involving complex mathematical proofs
 - **how to select a good gamma to fit model? author didn't show in this paper, hearing that he will supply it.**
+- **why FedProx performed badly contrast to the Algorithm SCAFFOLD?**
+  Because FedProx deal with the problem of system heterogeneity in some degrees, to a system which part of clients have stronger computing ability and some clients doesn't. **SCAFFOLD** tends to deal with the data skew problem.
